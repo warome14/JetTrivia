@@ -1,3 +1,3 @@
 package it.wlp.android.jettrvia.model
 
-data class Questions(val questionItem: List<QuestionItem>?)
+data class Questions(val questionItem: ArrayList<QuestionItem>?)
