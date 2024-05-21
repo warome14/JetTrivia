@@ -6,16 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import it.wlp.android.jettrvia.model.Questions
 import it.wlp.android.jettrvia.screens.QuestionViewModel
 import it.wlp.android.jettrvia.ui.theme.JetTrviaTheme
 
@@ -42,12 +38,16 @@ fun TriviaHome(viewModel: QuestionViewModel) {
 
 @Composable
 fun Questions(viewModel: QuestionViewModel) {
+    val loading = viewModel.data.value.loading
     val questions = viewModel.data.value.data?.toMutableList()
+    if(loading == true){
+        Log.d("Questions", "Question Loding...")
+    }
+    else{
+        questions?.forEach{
+            Log.d("Questions", "Question: ${it.question}")
 
-    if (!viewModel.data.value.loaded!!) {
-        Log.d("Questions", "Loading...")
-    } else {
-        Log.d("Questions", "Questions: ${questions.toString()}")
+        }
     }
 }
 

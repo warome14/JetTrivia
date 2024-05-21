@@ -14,14 +14,14 @@ class QuestionRepository @Inject constructor(private val questionApi: QuestionAp
     suspend fun getQuestions(): DataOrException<ArrayList<QuestionItem>, Exception> {
 
         try {
-            response.loaded = false
-            response.data = questionApi.getQuestions().questionItem
+            response.loading = true
+            response.data = questionApi.getQuestions()
             if (response.data.toString().isNotEmpty())
-                response.loaded = true
+                response.loading = false
 
         } catch (e: Exception) {
             Log.e("DataOrException","Error: ${e.message}")
-            this.response.exception = e
+            response.exception = e
         }
 
         return response

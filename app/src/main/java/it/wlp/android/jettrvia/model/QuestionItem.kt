@@ -1,6 +1,6 @@
 package it.wlp.android.jettrvia.model
 
-data class QuestionItem(val a: String = "",
+class QuestionItem(val a: String = "",
                         val b: String = "",
                         val c: String = "",
                         val question: String = "",
