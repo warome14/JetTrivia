@@ -121,6 +121,7 @@ fun QuestionDisplay(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ) {
+            if(questionIndex.value > 3 ) ShowScore(score = questionIndex.intValue)
             QuestionTracker(totalQuestions = totalQuestions, counter = questionIndex.intValue)
             DrawDashPathEffect(pathEffect)
             Column {
@@ -241,7 +242,12 @@ fun QuestionTracker(counter: Int = 10, totalQuestions: Int = 100) =
 @Composable
 fun ShowScore(score: Int = 12) {
 
-    val gradient = Brush.linearGradient(listOf(Colors.mLightPurple,Colors.mDarkPurple))
+    val gradient = Brush.linearGradient(listOf(Colors.mLightGray,Colors.mDarkPurple))
+
+    val progressiveFactor = remember(score) {
+        mutableStateOf(score*0.005f)
+    }
+
 
     Row(modifier = Modifier
         .padding(3.dp)
@@ -259,17 +265,22 @@ fun ShowScore(score: Int = 12) {
         .border(
             width = 4.dp,
             shape = RoundedCornerShape(34.dp),
-            brush = Brush.linearGradient(colors = listOf(Colors.mLightPurple, Colors.mLightPurple))
+            brush = Brush.linearGradient(colors = listOf(Colors.mLightGray, Colors.mDarkPurple))
         )) {
         Button(onClick = { /*TODO*/ }
             , enabled = false
             , contentPadding = PaddingValues(1.dp)
-            , modifier = Modifier.background( brush = gradient)
+            , modifier = Modifier
+                .background(brush = gradient)
+                .fillMaxWidth(progressiveFactor.value)
             , elevation = null
             , colors = ButtonDefaults
                 .buttonColors(containerColor = Color.Transparent
                     , disabledContainerColor = Color.Transparent)
             ) {
+            Text(text = (score*10).toString(), modifier = Modifier.padding(top =  10.dp)
+                .clip(RoundedCornerShape(23.dp)).fillMaxWidth().fillMaxHeight()
+                , color = Colors.mOffWhite, textAlign = TextAlign.Center)
         }
     }
 }
